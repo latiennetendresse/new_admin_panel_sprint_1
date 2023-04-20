@@ -5,7 +5,8 @@ from contextlib import contextmanager
 import psycopg2
 import pytest
 
-from load_data import load_from_sqlite
+from load_from_sqlite import load_from_sqlite
+from movies_admin.config.settings import dsl
 
 
 @contextmanager
@@ -13,8 +14,6 @@ def conn_context(db_path: str):
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     yield conn
-
-dsl = {'dbname': 'movies_database', 'user': 'app', 'password': '123qwe', 'host': '127.0.0.1', 'port': 5432}
 
 
 with conn_context(os.environ.get('DB_PATH')) as sqlite_conn, psycopg2.connect(**dsl) as pg_conn:

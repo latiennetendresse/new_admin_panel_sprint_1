@@ -40,7 +40,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = [os.environ.get('LOCALHOST')]
 
 
 # Password validation
@@ -71,3 +71,7 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+dsl = {'dbname': os.environ.get('DB_NAME'), 'user': os.environ.get('DB_USER'),
+       'password': os.environ.get('DB_PASSWORD'),
+       'host': os.environ.get('LOCALHOST'), 'port': os.environ.get('DB_PORT')}

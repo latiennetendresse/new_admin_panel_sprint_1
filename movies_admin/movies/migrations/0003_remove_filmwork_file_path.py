@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('movies', '0002_auto_20230419_1019'),
+        ('movies', '0002_rename_modified_at_to_updated_at'),
     ]
 
     operations = [

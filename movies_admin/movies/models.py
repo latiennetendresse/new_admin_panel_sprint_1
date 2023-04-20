@@ -5,19 +5,13 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class TimeStampedMixin(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-
-
 class UUIDMixin(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    class Meta:
-        abstract = True
+
+class TimeStampedMixin(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Genre(UUIDMixin, TimeStampedMixin):
@@ -68,14 +62,17 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
         db_table = "content\".\"film_work"
         verbose_name = 'Кинопроизведение'
         verbose_name_plural = 'Кинопроизведения'
+        indexes = [
+            models.Index(fields=['creation_date'], name='film_work_creation_date_idx'),
+        ]
 
     def __str__(self):
         return self.title
 
 
 class GenreFilmwork(UUIDMixin):
-    film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE)
-    genre = models.ForeignKey('Genre', on_delete=models.CASCADE)
+    film_work = models.ForeignKey(Filmwork, on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -83,10 +80,16 @@ class GenreFilmwork(UUIDMixin):
 
 
 class PersonFilmwork(UUIDMixin):
+    ROLES = [('director', 'Директор'),
+             ('actor', 'Актёр'),
+             ('writer', 'Писатель')]
     film_work = models.ForeignKey('Filmwork', on_delete=models.CASCADE)
     person = models.ForeignKey('Person', on_delete=models.CASCADE)
-    role = models.TextField(_('role'), null=True)
+    role = models.TextField(_('role'), null=True, choices=ROLES)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "content\".\"person_film_work"
+        indexes = [
+            models.Index(fields=['film_work_id', 'person_id'], name='film_work_person_idx'),
+        ]

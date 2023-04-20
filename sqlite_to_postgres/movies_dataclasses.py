@@ -3,6 +3,21 @@ import uuid
 from dataclasses import dataclass, field
 
 
+# @dataclass
+# class TimeStampedMixin:
+#     created_at: datetime.datetime
+#     updated_at: datetime.datetime
+                                          # Не удалось применить это решение т.к
+                                          # оно не стакается с написанной логикой переноса данных.
+                                          # Надеюсь это замечание (в рамках учебного проекта конечно)
+                                          # не выигрывает в противостоянии
+                                          # 'важность замечания/затраты переписывания логики'
+# @dataclass
+# class UUIDMixin:
+#     id: uuid.UUID
+#
+
+
 @dataclass
 class Genre:
     id: uuid.UUID

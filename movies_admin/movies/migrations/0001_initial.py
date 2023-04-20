@@ -14,15 +14,19 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunSQL('CREATE SCHEMA IF NOT EXIST content;'),
         migrations.CreateModel(
             name='Filmwork',
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('modified_at', models.DateTimeField(auto_now=True)),
                 ('id', models.UUIDField(default=uuid.uuid4,
                                         editable=False,
                                         primary_key=True,
                                         serialize=False)),
+                ('certificate', models.CharField(blank=True,
+                                                 max_length=512,
+                                                 verbose_name='certificate')),
                 ('file_path', models.FileField(blank=True, null=True,
                                                upload_to='movies/',
                                                verbose_name='file')),
@@ -48,8 +52,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Genre',
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('modified_at', models.DateTimeField(auto_now=True)),
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False,
                                         primary_key=True,
                                         serialize=False)),
@@ -67,8 +71,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Person',
             fields=[
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('modified_at', models.DateTimeField(auto_now=True)),
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False,
                                         primary_key=True,
                                         serialize=False)),
@@ -89,8 +93,8 @@ class Migration(migrations.Migration):
                                         serialize=False)),
                 ('role', models.TextField(null=True, verbose_name='role')),
                 ('created', models.DateTimeField(auto_now_add=True)),
-                ('film_work_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='movies.filmwork')),
-                ('person_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='movies.person')),
+                ('film_work', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='movies.filmwork')),
+                ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='movies.person')),
             ],
             options={
                 'db_table': 'content"."person_film_work',
@@ -103,9 +107,9 @@ class Migration(migrations.Migration):
                                         editable=False, primary_key=True,
                                         serialize=False)),
                 ('created', models.DateTimeField(auto_now_add=True)),
-                ('film_work_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                ('film_work', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
                                                 to='movies.filmwork')),
-                ('genre_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                ('genre', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
                                             to='movies.genre')),
             ],
             options={
