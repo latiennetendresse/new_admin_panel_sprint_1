@@ -43,5 +43,5 @@ CREATE TABLE IF NOT EXISTS content.genre_film_work (
 
 CREATE INDEX film_work_creation_date_idx ON content.film_work(creation_date);
 
-CREATE UNIQUE INDEX film_work_person_idx ON content.person_film_work (film_work_id, person_id, role);
+CREATE UNIQUE INDEX film_work_person_idx ON content.person_film_work (film_work_id, person_id);
 
