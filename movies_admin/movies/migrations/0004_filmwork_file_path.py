@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='filmwork',
             name='file_path',
-            field=models.FileField(blank=True, null=True, upload_to='movies/', verbose_name='file'),
+            field=models.FileField(blank=True, null=True,
+                                   upload_to='movies/', verbose_name='file'),
         ),
     ]

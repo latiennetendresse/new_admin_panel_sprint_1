@@ -18,7 +18,9 @@ from split_settings.tools import include
 load_dotenv()
 
 include(
-    'components/database.py', 'components/localization.py', 'components/app_definition.py'
+    'components/database.py',
+    'components/localization.py',
+    'components/app_definition.py'
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

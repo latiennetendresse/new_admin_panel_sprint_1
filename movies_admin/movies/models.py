@@ -49,14 +49,17 @@ class Filmwork(UUIDMixin, TimeStampedMixin):
     TYPES = [('movie', 'Фильм'),
              ('tv_show', 'ТВ-шоу')]
 
-    file_path = models.FileField(_('file'), blank=True, null=True, upload_to='movies/')
+    file_path = models.FileField(_('file'), blank=True,
+                                 null=True, upload_to='movies/')
     title = models.TextField(_('title'), blank=False)
     description = models.TextField(_('description'), blank=True)
-    creation_date = models.DateField(_('creation_date'), blank=True, null=True)
+    creation_date = models.DateField(_('creation_date'),
+                                     blank=True, null=True)
     rating = models.FloatField(_('rating'), blank=True,
                                validators=[MinValueValidator(0),
                                            MaxValueValidator(100)])
-    type = models.CharField(_('type'), max_length=10, choices=TYPES, blank=False)
+    type = models.CharField(_('type'), max_length=10,
+                            choices=TYPES, blank=False)
 
     genres = models.ManyToManyField(Genre, through='GenreFilmwork')
     persons = models.ManyToManyField(Person, through='PersonFilmwork')
